@@ -1,17 +1,22 @@
 package com.simudyne.platform
 
-object AgentProcessor {
-  def process(agent: AgentScala, brandFactor: Double): AgentScala = {
-    if (agent.autoRenew == 0) {
+trait AgentProcessor {
+  def process(agent: Agent, brandFactor: Double): Agent = {
+    if (agent.autoRenew == 1) {
       val random = Math.random() * 3
       val affinity = agent.paymentAtPurchase / agent.attributePrice + random * agent.attributePromotion * agent.inertiaForSwitch
       if (BreedType.BREED_C == agent.agentBreed
         && affinity < (agent.socialGrade * agent.attributeBrand)) {
-        AgentScala(agent, Some(BreedType.BREED_NC))
+        Agent(agent, BreedType.BREED_NC)
       } else if (BreedType.BREED_NC == agent.agentBreed && affinity < (agent.socialGrade * agent.attributeBrand * brandFactor)) {
-        AgentScala(agent, Some(BreedType.BREED_C))
+        Agent(agent, BreedType.BREED_C)
+      } else {
+        Agent(agent)
       }
+    } else {
+      Agent(agent)
     }
-    AgentScala(agent)
   }
 }
+
+object AgentProcessor extends AgentProcessor

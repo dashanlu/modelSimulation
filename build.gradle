@@ -23,12 +23,13 @@ dependencies {
 }
 
 tasks.withType(ScalaCompile) {
-    scalaCompileOptions.useAnt = false
+//    scalaCompileOptions.useAnt = false
 }
 
 dependencies {
-    compile group: 'com.typesafe.akka', name: 'akka-actor_2.10', version: '2.3.8'
     compile group: 'org.scala-lang', name: 'scala-library', version: '2.12.4'
+    compile group: 'com.typesafe.akka', name: 'akka-actor_2.12', version: '2.5.19'
+//    testCompile group: 'org.mockito', name: 'mockito-scala_2.12', version: '0.0.5'
 }
 
 intellij {
